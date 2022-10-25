@@ -48,7 +48,7 @@ function viewDepartments() {
     const sql = "SELECT * FROM department"
     db.query(sql, (err, res) => {
         console.table(res)
-    })
+    }) 
 }
 
 const viewRoles = () => {
@@ -70,11 +70,11 @@ const addDepartment = () => {
         {
             type: "input",
             name: "Dept",
-            message: "Enter department"
+            message: "Enter department name"
 
         }
     ).then(input => {
-        const sql = "INSERT INTO department VALUE (?)" 
+        const sql = "INSERT INTO department (name) VALUES (?)" 
         db.query(sql, input.Dept, (err, res) => {
             if (err) {
                 console.log(err)
@@ -84,6 +84,53 @@ const addDepartment = () => {
     })
 }
 
+const addRole = () => {
+    inquirer.prompt(
+        [{
+            type: "input",
+            name: "role title",
+            message: "Enter role title"
+
+        },
+        {
+            type: "input",
+            name: "role salary",
+            message: "enter role salary"
+        },
+    {
+        type: "input",
+        name: "role dept id",
+        message: "enter role department id"
+    }]
+    ).then(input => {
+        const sql = "INSERT INTO role (title, salary, department_id) VALUES (?)" 
+        db.query(sql, input.Role, (err, res) => {
+            if (err) {
+                console.log(err)
+            }
+            console.table(res)
+        })
+    })
+}
+
+const addEmployee = () => {
+    inquirer.prompt(
+        {
+            type: "input",
+            name: "Employee",
+            message: "Enter employee"
+
+        }
+    ).then(input => {
+        const sql = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?)" 
+        db.query(sql, input.Employee, (err, res) => {
+            if (err) {
+                console.log(err)
+            }
+            console.table(res)
+        })
+    })
+}
 
 
 promptUser()
