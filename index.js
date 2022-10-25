@@ -1,8 +1,7 @@
 const inquirer = require('inquirer')
 const mysql = require('mysql2');
-//const { allowedNodeEnvironmentFlags } = require('process');
-//const consoleTable = require('console-table');
-//const { listenerCount } = require('process');
+const cTable = require('console.table');
+
 
 const db = mysql.createConnection(
 {
@@ -38,8 +37,8 @@ function promptUser() {
             addRole()
         } else if (option.startOptions === "add an employee") {
             addEmployee()
-        } else if (option.startOptions === "update an employee") {
-            updateEmployee()
+        } else if (option.startOptions === "update an employee role") {
+            updateEmployeeRole()
         } else console.log("Thanks for using our application.")
     })
 }
@@ -69,13 +68,13 @@ const addDepartment = () => {
     inquirer.prompt(
         {
             type: "input",
-            name: "Dept",
+            name: "deptName",
             message: "Enter department name"
 
         }
     ).then(input => {
         const sql = "INSERT INTO department (name) VALUES (?)" 
-        db.query(sql, input.Dept, (err, res) => {
+        db.query(sql, input.deptName, (err, res) => {
             if (err) {
                 console.log(err)
             }
@@ -88,23 +87,23 @@ const addRole = () => {
     inquirer.prompt(
         [{
             type: "input",
-            name: "role title",
+            name: "roleTitle",
             message: "Enter role title"
 
         },
         {
             type: "input",
-            name: "role salary",
-            message: "enter role salary"
+            name: "roleSalary",
+            message: "Enter role salary"
         },
     {
         type: "input",
-        name: "role dept id",
-        message: "enter role department id"
+        name: "roleDeptId",
+        message: "Enter role department id"
     }]
     ).then(input => {
-        const sql = "INSERT INTO role (title, salary, department_id) VALUES (?)" 
-        db.query(sql, input.Role, (err, res) => {
+        const sql = "INSERT INTO role (title, salary, department_id) VALUES(?,?,?)" 
+        db.query(sql, (input.roleTitle, input.roleSalary, input.roleDeptId), (err, res) => {
             if (err) {
                 console.log(err)
             }
@@ -115,15 +114,30 @@ const addRole = () => {
 
 const addEmployee = () => {
     inquirer.prompt(
+        [{
+            type: "input",
+            name: "empFirstName",
+            message: "Enter employee's first name"
+
+        },
         {
             type: "input",
-            name: "Employee",
-            message: "Enter employee"
-
-        }
+            name: "empLastName",
+            message: "Enter employee's last name"
+        },
+        {
+            type: "input",
+            name: "empRoleId",
+            message: "Enter employee's role id"
+        },
+        {
+            type: "input",
+            name: "empManagerId",
+            message: "Enter the employee's manager's id"
+        }]
     ).then(input => {
-        const sql = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?)" 
-        db.query(sql, input.Employee, (err, res) => {
+        const sql = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)" 
+        db.query(sql, (input.empFirstName, input.empLastName, input.empRoleId, input.empManagerId), (err, res) => {
             if (err) {
                 console.log(err)
             }
@@ -131,6 +145,6 @@ const addEmployee = () => {
         })
     })
 }
-
+//add updateEmployee//
 
 promptUser()
