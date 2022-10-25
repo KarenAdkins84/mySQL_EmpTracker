@@ -47,6 +47,7 @@ function viewDepartments() {
     const sql = "SELECT * FROM department"
     db.query(sql, (err, res) => {
         console.table(res)
+        promptUser()
     }) 
 }
 
@@ -54,6 +55,7 @@ const viewRoles = () => {
     const sql = "SELECT * FROM role"
     db.query(sql, (err, res) => {
         console.table(res)
+        promptUser()
 })
 }
 
@@ -61,6 +63,7 @@ const viewEmployees = function () {
     const sql = "SELECT * FROM employee"
     db.query(sql, (err, res) => {
         console.table(res)
+        promptUser()
 })
 }
 
@@ -79,9 +82,11 @@ const addDepartment = () => {
                 console.log(err)
             }
             console.table(res)
+            promptUser()
         })
     })
 }
+
 
 const addRole = () => {
     inquirer.prompt(
@@ -108,6 +113,7 @@ const addRole = () => {
                 console.log(err)
             }
             console.table(res)
+            promptUser()
         })
     })
 }
@@ -142,9 +148,20 @@ const addEmployee = () => {
                 console.log(err)
             }
             console.table(res)
+            promptUser()
         })
     })
 }
 //add updateEmployee//
+// const updateEmployeeRole = () => {
+//     inquirer.prompt(
+//         {
+//             type: "list",
+//             name: "updateEmpRole",
+//             message: "Choose an employee to update",
+//             choices: ["const sql = SELECT * FROM employee"]
+//         }
+//     )
+// }
 
 promptUser()
