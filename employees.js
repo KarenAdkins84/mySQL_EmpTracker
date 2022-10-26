@@ -1,7 +1,7 @@
 const inquirer = require('inquirer')
 const mysql = require('mysql2');
 const cTable = require('console.table');
-const dotenv = require(dotenv);
+
 
 
 const db = mysql.createConnection(
@@ -47,6 +47,9 @@ function promptUser() {
 function viewDepartments() {
     const sql = "SELECT * FROM department"
     db.query(sql, (err, res) => {
+        if (err) {
+            console.log(err)
+        }
         console.table(res)
         promptUser()
     }) 
@@ -55,6 +58,9 @@ function viewDepartments() {
 const viewRoles = () => {
     const sql = "SELECT * FROM role"
     db.query(sql, (err, res) => {
+        if (err) {
+            console.log(err)
+        }
         console.table(res)
         promptUser()
 })
@@ -63,6 +69,9 @@ const viewRoles = () => {
 const viewEmployees = function () {
     const sql = "SELECT * FROM employee"
     db.query(sql, (err, res) => {
+        if (err) {
+            console.log(err)
+        }
         console.table(res)
         promptUser()
 })
@@ -108,7 +117,7 @@ const addRole = () => {
         message: "Enter role department id"
     }]
     ).then(input => {
-        const sql = "INSERT INTO role (title, salary, department_id) VALUES(?,?,?)" 
+        const sql = "INSERT INTO role (id, title, salary, department_id) VALUES(DEFAULT,?,?,?)" 
         db.query(sql, (input.roleTitle, input.roleSalary, input.roleDeptId), (err, res))
             if (err) {
                 console.log(err)
@@ -143,7 +152,7 @@ const addEmployee = () => {
             message: "Enter the employee's manager's id"
         }]
     ).then(input => {
-        const sql = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?),(?),(?),(?)" 
+        const sql = "INSERT INTO employee (id, first_name, last_name, role_id, manager_id) VALUES (DEFAULT, ?, ?, ?, ?)" 
         db.query(sql, (input.empFirstName, input.empLastName, input.empRoleId, input.empManagerId), (err, res) => {
             if (err) {
                 console.log(err)
