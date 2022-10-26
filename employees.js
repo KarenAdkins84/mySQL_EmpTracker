@@ -1,6 +1,7 @@
 const inquirer = require('inquirer')
 const mysql = require('mysql2');
 const cTable = require('console.table');
+const dotenv = require(dotenv);
 
 
 const db = mysql.createConnection(
@@ -108,15 +109,15 @@ const addRole = () => {
     }]
     ).then(input => {
         const sql = "INSERT INTO role (title, salary, department_id) VALUES(?,?,?)" 
-        db.query(sql, (input.roleTitle, input.roleSalary, input.roleDeptId), (err, res) => {
+        db.query(sql, (input.roleTitle, input.roleSalary, input.roleDeptId), (err, res))
             if (err) {
                 console.log(err)
             }
             console.table(res)
             promptUser()
         })
-    })
-}
+    }
+
 
 const addEmployee = () => {
     inquirer.prompt(
@@ -142,7 +143,7 @@ const addEmployee = () => {
             message: "Enter the employee's manager's id"
         }]
     ).then(input => {
-        const sql = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)" 
+        const sql = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?),(?),(?),(?)" 
         db.query(sql, (input.empFirstName, input.empLastName, input.empRoleId, input.empManagerId), (err, res) => {
             if (err) {
                 console.log(err)
