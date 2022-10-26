@@ -17,7 +17,7 @@ This is a CLI application, so open an integrated teminal, run npm install. Then 
 Javascript, Node.js, Inquirer, MySQL2
 
 #### Screencastify Demo
-[Link to Demo]()
+[Link to Demo](https://drive.google.com/file/d/1JqjtUiEP_MGbSu3SHehbaguRmbviEW20/view)
 
 #### Github Repo
 [Link to Repo](https://github.com/KarenAdkins84/mySQL_EmpTracker)
